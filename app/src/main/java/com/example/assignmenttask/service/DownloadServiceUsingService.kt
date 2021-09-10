@@ -48,8 +48,8 @@ class DownloadServiceUsingService : Service() {
   }
 
   private fun onErrors(throwable: Throwable, notificationId: Int, position: Int) {
-    val notifcatioHelper = NotificationHelper(this)
-    notifcatioHelper.cancelNotification(notificationId)
+    // val notifcatioHelper = NotificationHelper(this)
+    // notifcatioHelper.cancelNotification(notificationId)
     sendFailureMessageToActivity(throwable.toString(), position)
   }
 
@@ -68,10 +68,10 @@ class DownloadServiceUsingService : Service() {
    //   progressIntent.putExtra("progress",progress)
     }
     //sendBroadcast(progressIntent)
-    val notifcatioHelper = NotificationHelper(this)
-    val notify=notifcatioHelper.getNotification(title, progress = progress,body = "$progress %")
-    Log.e(this.toString(),NOTIFICATION_ID.toString())
-    notifcatioHelper.notify(NOTIFICATION_ID,notify)
+    // val notifcatioHelper = NotificationHelper(this)
+    // val notify=notifcatioHelper.getNotification(title, progress = progress,body = "$progress %")
+    // Log.e(this.toString(),NOTIFICATION_ID.toString())
+    // notifcatioHelper.notify(NOTIFICATION_ID,notify)
     sendSuccesMessageToActivity(false, it, postion)
   }
 
@@ -81,9 +81,9 @@ class DownloadServiceUsingService : Service() {
     // // successIntent.putExtra("notificationId", NOTIFICATION_ID)
     // // successIntent.putExtra("progress", 100)
     // // successIntent.putExtra(TITTLE, title)
-    val notifcatioHelper = NotificationHelper(this)
-    val notify=notifcatioHelper.getNotification(title,getString(R.string.file_upload_successful),null)
-    notifcatioHelper.notify(NOTIFICATION_ID,notify!!)
+    // val notifcatioHelper = NotificationHelper(this)
+    // val notify=notifcatioHelper.getNotification(title,getString(R.string.file_upload_successful),null)
+    // notifcatioHelper.notify(NOTIFICATION_ID,notify!!)
     sendSuccesMessageToActivity(true, null, postion)
   }
 
