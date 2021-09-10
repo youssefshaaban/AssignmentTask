@@ -32,7 +32,7 @@ class DownloadServiceUsingService : Service() {
   // var movie: Movie? = null
   // var position: Int? = null
   // var NOTIFICATION_ID: Int? = 1
-  var count = .1
+
   override fun onCreate() {
     super.onCreate()
     AndroidInjection.inject(this)
@@ -48,8 +48,8 @@ class DownloadServiceUsingService : Service() {
   }
 
   private fun onErrors(throwable: Throwable, notificationId: Int, position: Int) {
-    // val notifcatioHelper = NotificationHelper(this)
-    // notifcatioHelper.cancelNotification(notificationId)
+    val notifcatioHelper = NotificationHelper(this)
+    notifcatioHelper.cancelNotification(notificationId)
     sendFailureMessageToActivity(throwable.toString(), position)
   }
 
@@ -63,8 +63,8 @@ class DownloadServiceUsingService : Service() {
       progress = (it.currentPrecntage.toDouble() / it.total.toDouble()).toInt() * 100
      // progressIntent.putExtra("progress", progress)
     } else {
-      count = +.1
-      progress = (100 * count).toInt()
+    //  count = +.1
+    //  progress = (100 * count).toInt()
    //   progressIntent.putExtra("progress",progress)
     }
     //sendBroadcast(progressIntent)
@@ -72,6 +72,7 @@ class DownloadServiceUsingService : Service() {
     // val notify=notifcatioHelper.getNotification(title, progress = progress,body = "$progress %")
     // Log.e(this.toString(),NOTIFICATION_ID.toString())
     // notifcatioHelper.notify(NOTIFICATION_ID,notify)
+    Log.e("onSuccess $title",NOTIFICATION_ID.toString())
     sendSuccesMessageToActivity(false, it, postion)
   }
 
@@ -84,6 +85,7 @@ class DownloadServiceUsingService : Service() {
     // val notifcatioHelper = NotificationHelper(this)
     // val notify=notifcatioHelper.getNotification(title,getString(R.string.file_upload_successful),null)
     // notifcatioHelper.notify(NOTIFICATION_ID,notify!!)
+    Log.e("onSuccess $title",NOTIFICATION_ID.toString())
     sendSuccesMessageToActivity(true, null, postion)
   }
 
