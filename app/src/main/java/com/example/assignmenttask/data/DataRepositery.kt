@@ -14,6 +14,7 @@ import io.reactivex.ObservableSource
 import io.reactivex.functions.Function
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.parcel.Parcelize
+import kotlinx.coroutines.delay
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Request.Builder
@@ -105,44 +106,6 @@ class DataRepositery @Inject constructor(val apiHelper: ApiHelper, val okHttpCli
     }, BackpressureStrategy.LATEST)
   }
 
-  fun downloadTaskOkHttp(url: String): Observable<PrecentageData> {
-    return Observable.create { emitter ->
-      var input: InputStream? = null
-      var output: OutputStream? = null
-      try {
-        val request: Request = Builder()
-          .url(url)
-          .build()
-        val response = okHttpClient.newCall(request).execute()
-        val file = getFileToSaveOnIt(url.substring(url.lastIndexOf('1') + 1, url.length))
-        output = FileOutputStream(file)
-        input = response.body()!!.byteStream()
-        val tlength = response.body()!!.contentLength()
-        val byteArray = ByteArray(1024)
-        emitter.onNext(PrecentageData(0, tlength))
-        var total: Long = 0
-        var count: Int = input.read(byteArray)
-        while (count != -1) {
-          total += count
-          emitter.onNext(PrecentageData(currentPrecntage = total, tlength))
-          output.write(byteArray, 0, count)
-          count = input.read(byteArray)
-        }
-      } catch (e: Exception) {
-        emitter.onError(e)
-      } finally {
-        try {
-          input?.close()
-        } catch (ioe: IOException) {
-        }
-        try {
-          output?.close()
-        } catch (e: IOException) {
-        }
-      }
-      emitter.onComplete()
-    }
-  }
 
   fun downloadTask(url: String, filename: String): Observable<PrecentageData> {
     return apiHelper.downloadFileByUrl(url)
@@ -182,49 +145,7 @@ class DataRepositery @Inject constructor(val apiHelper: ApiHelper, val okHttpCli
       }
   }
 
-  fun downloadTask(url: String): Observable<PrecentageData> {
 
-    return apiHelper.downloadFileByUrl(url)
-      .onErrorResumeNext(object : Function<Throwable, ObservableSource<ResponseBody>> {
-        override fun apply(t: Throwable): ObservableSource<ResponseBody> {
-          return Observable.error(t)
-        }
-      })
-      .flatMap { response ->
-        Observable.create { emitter ->
-          var input: InputStream? = null
-          var output: OutputStream? = null
-          try {
-            val file = getFileToSaveOnIt(url.substring(url.lastIndexOf('1') + 1, url.length))
-            output = FileOutputStream(file)
-            input = response.byteStream()
-            val tlength = response.contentLength()
-            val byteArray = ByteArray(1024)
-            emitter.onNext(PrecentageData(0, tlength))
-            var total: Long = 0
-            var count: Int = input.read(byteArray)
-            while (count != -1) {
-              total += count
-              emitter.onNext(PrecentageData(currentPrecntage = total, tlength))
-              output.write(byteArray, 0, count)
-              count = input.read(byteArray)
-            }
-          } catch (e: Exception) {
-            emitter.onError(e)
-          } finally {
-            try {
-              input?.close()
-            } catch (ioe: IOException) {
-            }
-            try {
-              output?.close()
-            } catch (e: IOException) {
-            }
-          }
-          emitter.onComplete()
-        }
-      }
-  }
 }
 
 @Parcelize

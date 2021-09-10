@@ -18,6 +18,7 @@ import android.os.Bundle
 import android.os.IBinder
 import com.example.assignmenttask.App.Companion.context
 import dagger.android.AndroidInjection
+import java.util.concurrent.TimeUnit.MILLISECONDS
 
 class DownloadServiceUsingService : Service() {
   @Inject lateinit var dataRepositery: DataRepositery

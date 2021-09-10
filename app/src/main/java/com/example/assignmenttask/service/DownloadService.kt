@@ -86,9 +86,9 @@ class DownloadService : JobIntentService() {
   }
 
   companion object {
-  //  val JOB_ID = 102
-    fun enqueueWork(context: Context?, intent: Intent?,jobID:Int) {
-      enqueueWork(context!!, DownloadService::class.java, jobID, intent!!)
+    val JOB_ID = 102
+    fun enqueueWork(context: Context?, intent: Intent?) {
+      enqueueWork(context!!, DownloadService::class.java, JOB_ID, intent!!)
     }
   }
 
