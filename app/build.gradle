@@ -1,18 +1,20 @@
 plugins {
   id 'com.android.application'
   id 'kotlin-android'
+  id 'kotlin-kapt'
+  id 'kotlin-android-extensions'
 }
 
 android {
   compileSdk 30
 
   defaultConfig {
-    applicationId "com.example.assignmenttask"
-    minSdk 21
-    targetSdk 30
-    versionCode 1
-    versionName "1.0"
-
+    applicationId Android.INSTANCE.applicationId
+    minSdkVersion Android.INSTANCE.minSDK
+    targetSdk Android.INSTANCE.targetSDK
+    versionCode Android.INSTANCE.versionCode
+    versionName Android.INSTANCE.versionName
+    multiDexEnabled true
     testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
   }
 
@@ -26,6 +28,9 @@ android {
     sourceCompatibility JavaVersion.VERSION_1_8
     targetCompatibility JavaVersion.VERSION_1_8
   }
+  kapt{
+    generateStubs = true
+  }
   kotlinOptions {
     jvmTarget = '1.8'
   }
@@ -33,13 +38,27 @@ android {
 
 dependencies {
 
-  implementation 'androidx.core:core-ktx:1.6.0'
-  implementation 'androidx.appcompat:appcompat:1.3.1'
-  implementation 'com.google.android.material:material:1.4.0'
-  implementation 'androidx.constraintlayout:constraintlayout:2.1.0'
-  testImplementation 'junit:junit:4.+'
-  androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-  androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+  implementation Libs.INSTANCE.coreExt
+  implementation Libs.INSTANCE.appCompat
+  implementation Libs.INSTANCE.material
+  implementation Libs.INSTANCE.constraintLayout
+  implementation Libs.INSTANCE.retrofit
+  implementation Libs.INSTANCE.rxAdapter
+  implementation Libs.INSTANCE.rxAndroid
+  implementation Libs.INSTANCE.rxVersion
+  implementation Libs.INSTANCE.viewModel
+  implementation Libs.INSTANCE.liveData
+  implementation Libs.INSTANCE.gson
+  implementation Libs.INSTANCE.multidex
+  implementation Libs.INSTANCE.dagger
+  implementation Libs.INSTANCE.rx_permissions
+  implementation Libs.INSTANCE.legacy_support
+  kapt Libs.INSTANCE.daggercompiler
+  kapt Libs.INSTANCE.dagger_process
+  implementation Libs.INSTANCE.dagger_support
+  testImplementation TestLibs.INSTANCE.junit
+  androidTestImplementation TestLibs.INSTANCE.junitExt
+  androidTestImplementation TestLibs.INSTANCE.espresso
 
 
 }
