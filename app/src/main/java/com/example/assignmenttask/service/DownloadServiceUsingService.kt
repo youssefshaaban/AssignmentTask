@@ -90,6 +90,7 @@ class DownloadServiceUsingService : Service() {
   }
 
   override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+    Log.d("this", this.toString());
     val position = intent?.getIntExtra("position", 0)
     val url = intent?.getStringExtra("url")
     val tittle = intent?.getStringExtra(TITTLE)
