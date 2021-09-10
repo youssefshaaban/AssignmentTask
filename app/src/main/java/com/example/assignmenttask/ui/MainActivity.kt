@@ -101,8 +101,9 @@ class MainActivity : AppCompatActivity() {
   }
 
   fun unregisterBroadCastRecevier(){
-    unregisterReceiver(recevierFaliure)
-    unregisterReceiver(recevierSuccess)
+      val bManager = LocalBroadcastManager.getInstance(this)
+      bManager.unregisterReceiver(recevierFaliure)
+      bManager.unregisterReceiver(recevierSuccess)
   }
 
   override fun onStart() {
