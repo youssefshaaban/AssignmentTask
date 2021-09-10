@@ -23,6 +23,10 @@ class NotificationHelper(context: Context) : ContextWrapper(context){
                 WAVE_CHANNEL,
                 getString(R.string.noti_channel_default), NotificationManager.IMPORTANCE_DEFAULT
             )
+
+            mChannel.description = "no sound"
+            mChannel.setSound(null, null)
+            mChannel.enableLights(false);
             mChannel.lightColor = Color.GREEN
             mChannel.lockscreenVisibility = Notification.VISIBILITY_PRIVATE
             getManager()?.createNotificationChannel(mChannel)
