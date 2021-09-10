@@ -21,26 +21,10 @@
 
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
-
-
     </activity>
-    <receiver android:name=".service.FileProgressReceiver"
-        android:exported="false"
-        >
-      <intent-filter>
-        <action android:name="ACTION_CLEAR_NOTIFICATION" />
-        <action android:name="ACTION_PROGRESS_NOTIFICATION" />
-        <action android:name="ACTION_UPLOADED" />
-      </intent-filter>
-    </receiver>
     <service
         android:exported="false"
         android:name=".service.DownloadService"
-        android:permission="android.permission.BIND_JOB_SERVICE"
-        />
-    <service
-        android:exported="false"
-        android:name=".service.DownloadServiceUsingService"
         />
   </application>
 

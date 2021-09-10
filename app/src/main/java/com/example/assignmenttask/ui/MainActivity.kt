@@ -8,7 +8,6 @@ import android.content.pm.PackageManager
 import android.os.Build.VERSION
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
@@ -23,14 +22,12 @@ import com.example.assignmenttask.R
 import com.example.assignmenttask.data.Movie
 import com.tbruyelle.rxpermissions2.RxPermissions
 import dagger.android.AndroidInjection
-import dagger.android.AndroidInjector
 import javax.inject.Inject
 import android.content.IntentFilter
 import com.example.assignmenttask.data.PrecentageData
-import com.example.assignmenttask.service.DownloadService
 import com.example.assignmenttask.service.TITTLE
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import com.example.assignmenttask.service.DownloadServiceUsingService
+import com.example.assignmenttask.service.DownloadService
 
 val FILTER_ACTION_KEY = "any_key"
 
@@ -82,9 +79,7 @@ class MainActivity : AppCompatActivity() {
     AndroidInjection.inject(this)
     setupViews()
     setupObserve()
-    viewModel.getDataAttachmentFromFakeResponse()
   }
-
   private fun setupObserve() {
     viewModel = ViewModelProvider(this, factory).get(MainViewModel::class.java)
     observeData()
@@ -108,6 +103,7 @@ class MainActivity : AppCompatActivity() {
 
   override fun onStart() {
     super.onStart()
+    viewModel.getDataAttachmentFromFakeResponse()
     registerBroadCastRecevier()
   }
 
@@ -145,7 +141,7 @@ class MainActivity : AppCompatActivity() {
 
   private fun handleClickDownolad(movie: Movie,position:Int) {
     if (checkLocationPermission()){
-      val mIntent = Intent(this, DownloadServiceUsingService::class.java)
+      val mIntent = Intent(this, DownloadService::class.java)
       mIntent.putExtra("url", movie.url)
       mIntent.putExtra("NOTIFICATION_ID", movie.id)
       mIntent.putExtra("position",position)

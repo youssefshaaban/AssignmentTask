@@ -59,17 +59,20 @@ class NotificationHelper(context: Context) : ContextWrapper(context){
 
     fun getNotification(
         title: String?, body: String?,
-        resultPendingIntent: PendingIntent?
+        resultPendingIntent: PendingIntent?,
+        idIcon: Int?
     ): NotificationCompat.Builder? {
         val mBuilder: NotificationCompat.Builder
         mBuilder = NotificationCompat.Builder(applicationContext, WAVE_CHANNEL)
         mBuilder.setSmallIcon(getSmallIcon())
         mBuilder.color = ContextCompat.getColor(applicationContext, R.color.purple_200)
         mBuilder.setContentTitle(title)
-            .setSmallIcon(R.drawable.download)
             .setContentText(body)
             .setContentIntent(resultPendingIntent)
             .setDefaults(NotificationCompat.DEFAULT_ALL).priority = NotificationCompat.PRIORITY_HIGH
+        idIcon?.let {
+            mBuilder.setSmallIcon(idIcon!!)
+        }
         mBuilder.setVibrate(longArrayOf(0L))
         mBuilder.setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
         return mBuilder
