@@ -40,7 +40,9 @@ class DownloadService : Service() {
 
   override fun onDestroy() {
     super.onDestroy()
-    composit.clear()
+    if (!composit.isDisposed){
+      composit.dispose()
+    }
   }
 
   override fun onBind(intent: Intent?): IBinder? {

@@ -43,23 +43,24 @@ class MainViewModel @Inject constructor(
         .subscribe({
           val item = listMovieLiveData.value?.get(position)
           item?.startDownload = true
-          item?.currentDownload=it.currentPrecntage
-          item?.totalFileSize=it.total
-          notifyPosiotio.value=position
+          item?.currentDownload = it.currentPrecntage
+          item?.totalFileSize = it.total
+          notifyPosiotio.value = position
         }, {
           errrorMessage.value = it.message
-        },{
+        }, {
           val item = listMovieLiveData.value?.get(position)
-          item?.isCompleted=true
-          item?.startDownload=false
-          notifyPosiotio.value=position
+          item?.isCompleted = true
+          item?.startDownload = false
+          notifyPosiotio.value = position
         })
     )
   }
 
   override fun onCleared() {
     super.onCleared()
-    compositeDisposable.dispose()
-    compositeDisposable.clear()
+    if (!compositeDisposable.isDisposed) {
+      compositeDisposable.dispose()
+    }
   }
 }
