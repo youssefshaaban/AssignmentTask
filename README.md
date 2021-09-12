@@ -1,7 +1,8 @@
 # AssignmentTask
-usnig MVVM pattern to donload attachment 
-<img src="1pic.jpg" width=“200”/>
+# Usnig MVVM pattern to donload attachment 
 
-i use service to download files in background but after search i found library do this solution perfect 
+<img src="1pic.jpg" width=“200” height="500"/>
+
+I use service to download files in background but after search i found library do this solution perfect\
 [(`RxDonload`]( https://github.com/ssseasonnn/RxDownload))
 
